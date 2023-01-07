@@ -1,11 +1,13 @@
 <template>
   <div class="hello">
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="auto">
         <Aside></Aside>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <Header></Header>
+        </el-header>
         <el-main>
           <!-- 路由的出口 -->
           <router-view></router-view>
@@ -17,6 +19,8 @@
 
 <script>
 import Aside from '@/components/common/Aside.vue'
+import Header from '@/components/common/Header.vue'
+
 import { RouterView } from 'vue-router';
 export default {
   name: 'HelloWorld',
@@ -26,12 +30,15 @@ export default {
     };
   },components:{
     Aside,
+    Header,
     RouterView
 }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style lang="less" scoped>
+  .el-header{
+    padding: 0;
+  }
 </style>

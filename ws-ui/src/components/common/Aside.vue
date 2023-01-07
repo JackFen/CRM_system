@@ -2,8 +2,9 @@
 <template>
     <div class="asideContainer">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-            :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-            <h3>CRM系统</h3>
+        :collapse="isCollapse" background-color="rgb(50,65,87)" text-color="#fff" active-text-color="#ffd04b">
+            <!-- 实现菜单栏折叠时标题动态变化 -->
+            <h3>{{isCollapse?'某某':'某某CRM系统'}}</h3>
             <!-- 没有二级菜单 -->
             <el-menu-item v-for="item in noChildren" :key="item.name" :index="item.name" @click="clickMenu(item)">
                 <i :class="`el-icon-${item.icon}`"></i>
@@ -28,12 +29,14 @@
 <style lang="less" scoped>
     .el-menu{
         height: 100vh;
+        border-right: none;
         h3{
             color: #fff;
             text-align: center;
             line-height: 48px;
             font-size: 22px;
             font-weight: 400;
+            padding: 0 20px;
         }
     }
 </style>
@@ -43,7 +46,7 @@ export default {
     name: 'Aside',
     data() {
         return {
-            isCollapse: false,
+            // isCollapse: false,
             menuData: [
                 {
                     path: '/',
@@ -121,6 +124,9 @@ export default {
         noChildren() {
             // 过滤所有只有一级菜单的数据
             return this.menuData.filter(item => !item.children)
+        },
+        isCollapse(){
+            return this.$store.state.tab.isCollapse
         }
     }
 }
