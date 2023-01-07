@@ -10,9 +10,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "color": "^0.11.4",
+    "color-string": "^1.5.5",
+    "colormin": "^1.1.2",
+    "cssnano": "^3.10.0",
     "element-ui": "^2.15.12",
     "less": "^3.0.0",
     "less-loader": "^4.1.0",
+    "postcss-colormin": "^2.2.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2"
@@ -29,7 +34,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.0",
+    "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
