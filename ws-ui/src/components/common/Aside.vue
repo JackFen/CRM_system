@@ -113,6 +113,8 @@ export default {
             if(this.$route.path!=item.path && !(this.$route.path === '/FirstPage' && item.path === '/')){
                 this.$router.push(item.path);
             }
+            //触发面包屑数据的更新
+            this.$store.commit('menuChange',item)
             
         }
     },

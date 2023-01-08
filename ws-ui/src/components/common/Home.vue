@@ -8,6 +8,7 @@
         <el-header>
           <Header></Header>
         </el-header>
+        <CommonTab></CommonTab>
         <el-main>
           <!-- 路由的出口 -->
           <router-view></router-view>
@@ -21,7 +22,7 @@
 import Aside from '@/components/common/Aside.vue'
 import Header from '@/components/common/Header.vue'
 
-import { RouterView } from 'vue-router';
+import CommonTab from '@/components/common/CommonTab.vue'
 export default {
   name: 'HelloWorld',
   data() {
@@ -31,7 +32,7 @@ export default {
   },components:{
     Aside,
     Header,
-    RouterView
+    CommonTab
 }
 }
 </script>

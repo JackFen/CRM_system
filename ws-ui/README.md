@@ -4,7 +4,7 @@
 
 该文件夹为前端部分
 
-技术栈：vue、elementUI、less、vuex
+技术栈：vue、elementUI、less、vuex、echarts
 
 ## Build Setup
 

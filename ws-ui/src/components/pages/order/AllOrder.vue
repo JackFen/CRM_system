@@ -1,6 +1,6 @@
 <template>
     <div>
-        所有订单
+        全部订单
     </div>
 </template>
 <script>

@@ -14,6 +14,7 @@
     "color-string": "^1.5.5",
     "colormin": "^1.1.2",
     "cssnano": "^3.10.0",
+    "echarts": "^5.1.2",
     "element-ui": "^2.15.12",
     "less": "^3.0.0",
     "less-loader": "^4.1.0",

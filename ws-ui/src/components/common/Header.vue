@@ -2,7 +2,11 @@
     <div class="header-container">
         <div class="l-content">
             <el-button icon="el-icon-menu" size="medium" style="margin-left:20px;" @click="handleMenu"></el-button>
-            <span class="firstPage">首页</span>
+            <el-breadcrumb separator="/" style="padding-left: 20px;">
+                <el-breadcrumb-item v-for="item in tags" :key="item.path" :to="{ path: item.path }">{{
+                    item.label
+                }}</el-breadcrumb-item>
+            </el-breadcrumb>
         </div>
         <div class="r-content">
             <!-- 头像下拉菜单 -->
@@ -19,16 +23,22 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'Header',
     data() {
         return {}
     },
-    methods:{
-        handleMenu(){
+    methods: {
+        handleMenu() {
             // 对菜单做缩放操作
-            this.$store.commit('collapseChange')
+            this.$store.commit('collapseChange');
         }
+    },
+    computed: {
+        ...mapState({
+            tags: state => state.tab.tabsList
+        })
     }
 }
 </script>
@@ -47,12 +57,36 @@ export default {
     margin-left: 10px;
     cursor: pointer;
 }
-.r-content{
+
+.r-content {
     padding-right: 20px;
-    .user_img{
+
+    .user_img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
     }
+}
+
+.l-content {
+    display: flex;
+    align-items: center;
+
+    /deep/.el-breadcrumb__item {
+        .el-breadcrumb__inner {
+            font-weight: normal;
+
+            &.is-link {
+                color: #666;
+            }
+        }
+
+        &:last-child {
+            .el-breadcrumb__inner {
+                color: #fff;
+            }
+        }
+    }
+
 }
 </style>
