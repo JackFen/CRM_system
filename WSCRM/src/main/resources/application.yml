@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: 某某CRM系统
+  profiles:
+    active: dev
