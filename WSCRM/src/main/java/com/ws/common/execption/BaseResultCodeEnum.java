@@ -1,7 +1,7 @@
-package com.wanshu.common.execption;
+package com.ws.common.execption;
 
 
-import com.wanshu.common.model.IDict;
+import com.ws.common.model.IDict;
 
 /**
  */

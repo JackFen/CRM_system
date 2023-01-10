@@ -1,4 +1,4 @@
-package com.wanshu.common.execption;
+package com.ws.common.execption;
 
 /**
  * 自定义的业务异常类型

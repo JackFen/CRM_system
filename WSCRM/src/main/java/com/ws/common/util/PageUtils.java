@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 

@@ -1,4 +1,4 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

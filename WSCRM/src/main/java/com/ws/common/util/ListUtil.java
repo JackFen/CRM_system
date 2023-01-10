@@ -1,7 +1,7 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 
-import com.wanshu.common.model.TreeNode;
+import com.ws.common.model.TreeNode;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 

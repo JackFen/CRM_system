@@ -8,10 +8,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 导入控制左侧菜单栏展开与否的vuex脚本
 import store from '@/store';
+// 导入axios
+import axios from 'axios';
 
 // 配置ElementUI
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+
+// 配置axios
+Vue.prototype.$http = axios//修改内部的$http为axios
 
 /* eslint-disable no-new */
 new Vue({

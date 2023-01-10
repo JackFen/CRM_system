@@ -1,4 +1,4 @@
-package com.wanshu.common.execption;
+package com.ws.common.execption;
 
 /**
  */

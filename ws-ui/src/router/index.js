@@ -8,6 +8,9 @@ import AllOrder from '@/components/pages/order/AllOrder.vue'
 import MyOrder from '@/components/pages/order/MyOrder.vue'
 import FirstPage from '@/components/pages/FirstPage.vue'
 import Login from '@/components/common/Login.vue'
+import SysUser from '@/components/pages/sys/SysUser.vue'
+import SysRole from '@/components/pages/sys/SysRole.vue'
+import SysMenu from '@/components/pages/sys/SysMenu.vue'
 
 
 Vue.use(Router)
@@ -45,6 +48,21 @@ export default new Router({
           path: '/MyOrder',
           name: 'myOrder',
           component: MyOrder
+        },
+        {
+          path: '/SysUser',
+          name: 'sysUser',
+          component: SysUser
+        },
+        {
+          path: '/SysRole',
+          name: 'sysRole',
+          component: SysRole
+        },
+        {
+          path: '/SysMenu',
+          name: 'sysMenu',
+          component: SysMenu
         }
       ]
     },

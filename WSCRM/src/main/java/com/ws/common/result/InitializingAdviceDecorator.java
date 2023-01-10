@@ -1,4 +1,4 @@
-package com.wanshu.common.result;
+package com.ws.common.result;
 
 
 import org.springframework.beans.factory.InitializingBean;

@@ -1,11 +1,11 @@
-package com.wanshu.common.execption;
+package com.ws.common.execption;
 
 
 import com.google.common.collect.Lists;
-import com.wanshu.common.result.ResultWrapper;
+import com.ws.common.result.ResultWrapper;
 
-import com.wanshu.common.util.RequestContextUtils;
-import com.wanshu.common.util.SpringContextUtil;
+import com.ws.common.util.RequestContextUtils;
+import com.ws.common.util.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

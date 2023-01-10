@@ -56,6 +56,34 @@ export default {
                     url: 'Home/Home'
                 },
                 {
+                    label: '系统管理',
+                    icon: 'setting',
+                    name: 'system',
+                    children: [
+                        {
+                            path: '/SysUser',
+                            name: 'sysUser',
+                            label: '用户管理',
+                            icon: 'setting',
+                            url: 'sys/sysUser'
+                        },
+                        {
+                            path: '/SysRole',
+                            name: 'sysRole',
+                            label: '角色管理',
+                            icon: 'setting',
+                            url: 'sys/sysRole'
+                        },
+                        {
+                            path: '/SysMenu',
+                            name: 'sysMenu',
+                            label: '菜单管理',
+                            icon: 'setting',
+                            url: 'sys/sysMenu'
+                        }
+                    ]
+                },
+                {
                     label: '客户管理',
                     icon: 'user',
                     name: 'customer',

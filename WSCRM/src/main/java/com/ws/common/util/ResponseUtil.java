@@ -1,4 +1,4 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;

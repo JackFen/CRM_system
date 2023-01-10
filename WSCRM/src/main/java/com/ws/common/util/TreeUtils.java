@@ -1,4 +1,4 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 
 import org.apache.commons.lang3.StringUtils;

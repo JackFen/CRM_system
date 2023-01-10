@@ -1,7 +1,7 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 
-import com.wanshu.common.model.IDict;
+import com.ws.common.model.IDict;
 import lombok.NonNull;
 
 import java.util.Objects;

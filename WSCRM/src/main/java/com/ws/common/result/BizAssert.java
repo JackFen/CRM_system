@@ -1,12 +1,12 @@
-package com.wanshu.common.result;
+package com.ws.common.result;
 
 
 
 
 
-import com.wanshu.common.execption.BaseResultCodeEnum;
-import com.wanshu.common.execption.BizException;
-import com.wanshu.common.execption.IResultCode;
+import com.ws.common.execption.BaseResultCodeEnum;
+import com.ws.common.execption.BizException;
+import com.ws.common.execption.IResultCode;
 
 import java.util.Collection;
 import java.util.Objects;

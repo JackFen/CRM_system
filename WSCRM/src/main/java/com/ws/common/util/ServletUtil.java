@@ -1,4 +1,4 @@
-package com.wanshu.common.util;
+package com.ws.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;

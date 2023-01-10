@@ -5,7 +5,7 @@
 
 本项目记录作者学习vue+springBoot整合的过程
 
-前端技术栈：vue、elementUI、less、vuex、echarts
+前端技术栈：vue、elementUI、less、vuex、echarts、axios
 
 后端技术栈：SpringBoot、MyBatisPlus、MySql、Swagger、SpringSecurity、jwt
 
@@ -21,5 +21,6 @@
 - 完成了左侧导航栏展开与收起、页面的用户显示、表格显示和顶部导航栏 （2023/1/7）
 - 完成了顶部面包屑功能和tab导航页功能（2023/1/8）
 - 完成了登录页面的编写（前端）、后端框架的搭建和SWagger的整合(2023/1/9)
+- 完成了响应结果的统一封装、全局异常处理的配置、分页插件的配置和axios的配置（2023/1/10）
 
 未完待续
