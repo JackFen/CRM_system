@@ -30,7 +30,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public PageUtils queryPage(SysRoleQueryDTO queryDTO) {
         QueryWrapper<SysRole> wrapper=new QueryWrapper<SysRole>().like(
-                StringUtils.isNotEmpty(queryDTO.getRoleName()),"rolename",queryDTO.getRoleName()
+                StringUtils.isNotEmpty(queryDTO.getRoleName()),"role_name",queryDTO.getRoleName()
         );
         Page<SysRole> page = this.page(queryDTO.page(), wrapper);
         return new PageUtils(page);
@@ -38,7 +38,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public void saveRole(SysRole role) {
-
+        this.save(role);
     }
 
     @Override

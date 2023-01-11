@@ -17,6 +17,8 @@ Vue.config.productionTip = false
 
 // 配置axios
 Vue.prototype.$http = axios//修改内部的$http为axios
+axios.defaults.baseURL="http://localhost:8086/ws"
+
 
 /* eslint-disable no-new */
 new Vue({

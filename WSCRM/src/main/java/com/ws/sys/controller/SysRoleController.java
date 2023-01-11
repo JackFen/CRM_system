@@ -1,15 +1,14 @@
 package com.ws.sys.controller;
 
 import com.ws.common.util.PageUtils;
+import com.ws.sys.entity.SysRole;
 import com.ws.sys.model.SysRoleQueryDTO;
 import com.ws.sys.service.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -20,7 +19,8 @@ import org.springframework.stereotype.Controller;
  * @since 2023-01-09
  */
 @Api(tags = "系统角色",value = "sysRole")
-@Controller
+@CrossOrigin
+@RestController
 @RequestMapping("/sys/sysRole")
 public class SysRoleController {
     @Autowired
@@ -30,5 +30,11 @@ public class SysRoleController {
     @GetMapping("/list")
     public PageUtils list(@ApiParam(value = "查询的条件") SysRoleQueryDTO queryDTO){
         return roleService.queryPage(queryDTO);
+    }
+    @ApiOperation(value = "添加角色",notes = "添加角色")
+    @PostMapping("/save")
+    public String save(@RequestBody SysRole sysRole){
+        roleService.saveRole(sysRole);
+        return "success";
     }
 }
