@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 角色 服务实现类
@@ -38,16 +40,50 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public void saveRole(SysRole role) {
-        this.save(role);
+        //判断角色编号是否存在，如果存在就走更新的逻辑，否则新增数据
+        if(role.getRoleId()!=null && role.getRoleId()!=0){
+            //表示更新操作
+            this.update(role);
+        }
+        else {
+            role.setCreateTime(LocalDateTime.now());
+            this.save(role);
+        }
     }
 
     @Override
     public void update(SysRole role) {
-
+        this.baseMapper.updateById(role);
     }
 
     @Override
     public void deleteBatch(Long[] roleIds) {
 
+    }
+
+    /**
+     * 校验角色是否存在
+     * @param roleName 角色名称
+     * @return
+     *      true 存在
+     *      false 不存在
+     */
+    @Override
+    public boolean checkRoleName(String roleName) {
+        if (StringUtils.isEmpty(roleName)){
+            return false;
+        }
+        QueryWrapper<SysRole> queryWrapper=new QueryWrapper<SysRole>().eq("role_name",roleName);
+        int count = this.count(queryWrapper);
+        return count>0;
+    }
+
+    @Override
+    public boolean deleteRoleById(Long roleId) {
+        //删除角色信息
+        //如果这个角色分配给了 用户 或者 角色绑定了菜单，那么都不允许删除角色
+        //查看该用户是否分配给了用户
+        int count=this.baseMapper.checkRoleCanDelete(roleId);
+        return false;
     }
 }

@@ -36,8 +36,9 @@
                 :current-page="pageIndex" :page-sizes="[5, 10, 20, 50, 100]" :page-size="pageSize" :total="totalPage"
                 layout="total, sizes, prev, pager, next, jumper" style="margin-top:30px;">
             </el-pagination>
-            <el-dialog title="新增角色" width="35%" :visible.sync="dialogFormVisible">
-                <el-form :model="dataDialogForm" :rules="rules">
+            <el-dialog :title="dataDialogForm.roleId === 0 ? '新增角色' : '更新角色'" width="35%"
+                :visible.sync="dialogFormVisible" @close="closeDialog()">
+                <el-form :model="dataDialogForm" :rules="rules" ref="ruleForm">
                     <el-form-item label="角色名称" label-width="120px" prop="roleName">
                         <el-input v-model="dataDialogForm.roleName" placeholder="角色名称" style="width: 250px;"></el-input>
                     </el-form-item>
@@ -46,8 +47,8 @@
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="handleSubmitFormData()">确 定</el-button>
+                    <el-button @click="cancel()">取 消</el-button>
+                    <el-button type="primary" @click="handleSubmitFormData('ruleForm')">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -57,11 +58,36 @@
 export default {
     name: 'sysRole',
     data() {
+        // 自定义校验规则
+        var checkRoleName = (rule, value, callback) => {
+            if (this.dataDialogForm.roleId !== 0) {
+                // 说明是更新操作
+                callback();
+            }
+            else if (value === '') {
+                callback(new Error('请输入角色名称'));
+            } else {
+                // 调用后端接口 检查 角色名称是否存在
+                this.$http.get('/sys/sysRole/checkRoleName?roleName=' + value).then((res) => {
+                    if (res.data.data === 'fail') {
+                        // 角色名不存在。可以使用
+                        callback();
+                    }
+                    else {
+                        callback(new Error('角色名称重复'));
+                    }
+                });
+            }
+        };
         return {
             dataForm: {
                 roleName: '',
             },
-            dataDialogForm: {},
+            dataDialogForm: {
+                roleId: 0,
+                roleName: '',
+                remark: '',
+            },
             dataList: [],
             pageIndex: 1,
             pageSize: 5,
@@ -73,10 +99,10 @@ export default {
             dialogFormSubmitVisible: false,
             rules: {
                 roleName: [
-                    { required: true, message: '请输入角色名称', trigger: 'blur' }
+                    { validator: checkRoleName, trigger: 'blur' }
                 ],
                 remark: [
-                    { required: true, message: '请输入描述信息', trigger: 'change' }
+                    { required: true, message: '请输入描述信息', trigger: 'blur' }
                 ]
             }
         };
@@ -110,27 +136,97 @@ export default {
                 this.dataListLoading = false;
             });
         },
-        handleEdit(index, item) { },
-        handleDelete(index, item) { },
+        handleEdit(index, item) {
+            // 打开更新的窗口
+            this.dialogFormVisible = true;
+
+            this.dataDialogForm.roleId = item.roleId;
+            this.dataDialogForm.roleName = item.roleName;
+            this.dataDialogForm.remark = item.remark;
+
+        },
+        handleDelete(index, item) {
+            // 删除角色信息
+            this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if (this.dialogFormSubmitVisible) {
+                    return
+                }
+                this.dialogFormSubmitVisible = true;
+                this.$http.get('/sys/sysRole/deleteRole?roleId=' + item.roleId).then((res) => {
+                    this.dialogFormSubmitVisible = true;
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
         openDialog() {
             // 打开窗口
             this.dialogFormVisible = true;
+
+            this.dataDialogForm.roleId = 0;
+            this.dataDialogForm.roleName = '';
+            this.dataDialogForm.remark = '';
+
         },
-        handleSubmitFormData() {
-            this.addRole();
+        closeDialog() {
+            // 点击关闭时清空form表格的数据
+            this.dataDialogForm = {
+                roleId: 0,
+                roleName: '',
+                remark: '',
+            };
         },
-        addRole() {
-            if (this.dialogFormSubmitVisible) {
-                return
-            }
-            this.dialogFormSubmitVisible = true;
-            this.$http.post('/sys/sysRole/save', this.dataDialogForm).then((res) => {
-                console.log(res);
-                // 关闭窗口
-                this.dialogFormVisible = false;
-                // 刷新数据
-                this.getDataList();
-            })
+        // 点击取消时关闭dialog并且清空form表格的数据
+        cancel() {
+            // 关闭dialog
+            this.dialogFormVisible = false
+            // 重置form表单
+            this.dataDialogForm = {
+                roleId: 0,
+                roleName: '',
+                remark: '',
+            };
+
+        },
+        handleSubmitFormData(formName) {
+            this.updateRole(formName);
+        },
+        updateRole(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    if (this.dialogFormSubmitVisible) {
+                        return
+                    }
+                    this.dialogFormSubmitVisible = true;
+                    this.$http.post('/sys/sysRole/save', this.dataDialogForm).then((res) => {
+                        // 关闭窗口
+                        this.dialogFormVisible = false;
+                        // 清空添加数据的表单
+                        this.dataDialogForm = {
+                            roleId: 0,
+                            roleName: '',
+                            remark: '',
+                        };
+                        this.dialogFormSubmitVisible = false;
+                        // 刷新数据
+                        this.getDataList();
+                    });
+                } else {
+                    // console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     },
     mounted() {

@@ -19,4 +19,8 @@ public interface ISysRoleService extends IService<SysRole> {
     void saveRole(SysRole role);
     void update(SysRole role);
     void deleteBatch(Long[] roleIds);
+
+    boolean checkRoleName(String roleName);
+
+    boolean deleteRoleById(Long roleId);
 }

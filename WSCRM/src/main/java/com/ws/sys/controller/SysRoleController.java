@@ -37,4 +37,21 @@ public class SysRoleController {
         roleService.saveRole(sysRole);
         return "success";
     }
+
+    @GetMapping("/deleteRole")
+    public String deleteRole(Long roleId){
+        roleService.deleteRoleById(roleId);
+        return "success";
+    }
+    /**
+     * 检查角色名称是否存在
+     * @param roleName 角色名称
+     * @return
+     */
+    @ApiOperation(value = "检查角色名称是否存在",notes = "校验角色名称")
+    @GetMapping("/checkRoleName")
+    public String checkRoleName(String roleName){
+        boolean flag=roleService.checkRoleName(roleName);
+        return flag?"success":"fail";
+    }
 }
