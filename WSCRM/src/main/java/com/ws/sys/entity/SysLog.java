@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -43,6 +45,8 @@ public class SysLog implements Serializable {
     @ApiModelProperty("IP地址")
     private String ip;
 
+    // 格式化时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("创建时间")
     private LocalDateTime createDate;
 
@@ -105,7 +109,7 @@ public class SysLog implements Serializable {
 
     @Override
     public String toString() {
-        return "SysLog{" +
+        return "SystemLog{" +
             "id=" + id +
             ", username=" + username +
             ", operation=" + operation +

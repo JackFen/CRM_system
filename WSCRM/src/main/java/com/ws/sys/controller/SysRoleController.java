@@ -34,14 +34,14 @@ public class SysRoleController {
     @ApiOperation(value = "添加角色",notes = "添加角色")
     @PostMapping("/save")
     public String save(@RequestBody SysRole sysRole){
-        roleService.saveRole(sysRole);
+        roleService.saveOrUpdateRole(sysRole);
         return "success";
     }
 
     @GetMapping("/deleteRole")
     public String deleteRole(Long roleId){
-        roleService.deleteRoleById(roleId);
-        return "success";
+        boolean flag=roleService.deleteRoleById(roleId);
+        return flag?"1":"0";
     }
     /**
      * 检查角色名称是否存在

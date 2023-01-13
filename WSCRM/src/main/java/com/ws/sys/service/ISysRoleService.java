@@ -4,6 +4,7 @@ import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ws.sys.model.SysRoleQueryDTO;
+import org.apache.ibatis.annotations.Param;
 
 
 /**
@@ -16,11 +17,11 @@ import com.ws.sys.model.SysRoleQueryDTO;
  */
 public interface ISysRoleService extends IService<SysRole> {
     PageUtils queryPage(SysRoleQueryDTO queryDTO);
-    void saveRole(SysRole role);
+    void saveOrUpdateRole(SysRole role);
     void update(SysRole role);
     void deleteBatch(Long[] roleIds);
 
     boolean checkRoleName(String roleName);
 
-    boolean deleteRoleById(Long roleId);
+    boolean deleteRoleById(@Param("roleId") Long roleId);
 }

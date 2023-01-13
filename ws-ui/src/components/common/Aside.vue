@@ -80,6 +80,13 @@ export default {
                             label: '菜单管理',
                             icon: 'setting',
                             url: 'sys/sysMenu'
+                        },
+                        {
+                            path: '/SysLog',
+                            name: 'sysLog',
+                            label: '系统日志',
+                            icon: 'setting',
+                            url: 'sys/sysLog'
                         }
                     ]
                 },

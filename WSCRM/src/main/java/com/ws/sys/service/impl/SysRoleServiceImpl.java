@@ -2,6 +2,7 @@ package com.ws.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ws.common.annotation.SystemLog;
 import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysRole;
 import com.ws.sys.mapper.SysRoleMapper;
@@ -38,19 +39,25 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return new PageUtils(page);
     }
 
+    @SystemLog("添加或更新角色")
     @Override
-    public void saveRole(SysRole role) {
+    public void saveOrUpdateRole(SysRole role) {
         //判断角色编号是否存在，如果存在就走更新的逻辑，否则新增数据
         if(role.getRoleId()!=null && role.getRoleId()!=0){
             //表示更新操作
             this.update(role);
         }
         else {
-            role.setCreateTime(LocalDateTime.now());
-            this.save(role);
+            this.saveRole(role);
         }
     }
 
+    @SystemLog("添加角色")
+    public void saveRole(SysRole role){
+        role.setCreateTime(LocalDateTime.now());
+        this.save(role);
+    }
+    @SystemLog("更新角色")
     @Override
     public void update(SysRole role) {
         this.baseMapper.updateById(role);
@@ -78,12 +85,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return count>0;
     }
 
+    @SystemLog("删除角色")
     @Override
     public boolean deleteRoleById(Long roleId) {
         //删除角色信息
         //如果这个角色分配给了 用户 或者 角色绑定了菜单，那么都不允许删除角色
         //查看该用户是否分配给了用户
         int count=this.baseMapper.checkRoleCanDelete(roleId);
-        return false;
+        if(count==0){
+            //表示可以删除
+            this.baseMapper.deleteById(roleId);
+        }
+        return count==0;
     }
 }

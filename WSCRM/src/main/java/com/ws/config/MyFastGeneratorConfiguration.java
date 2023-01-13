@@ -21,11 +21,11 @@ public class MyFastGeneratorConfiguration {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "E://wanshu-crm")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("sys_menu") // 设置需要生成的表名
+                    builder.addInclude("sys_log") // 设置需要生成的表名
                     //.addTablePrefix("act_fo_")
                     ; // 设置过滤表前缀
                 })
-                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模 板，默认的是Velocity引擎模板
+                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
     }
 }

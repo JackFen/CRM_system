@@ -3,6 +3,8 @@
 <mapper namespace="com.ws.sys.mapper.SysRoleMapper">
 
     <select id="checkRoleCanDelete" resultType="java.lang.Integer">
-
+        select count(1)
+        from sys_user_role s1,sys_role_menu s2
+        where s1.role_id=#{roleId} or s2.role_id=#{roleId}
     </select>
 </mapper>

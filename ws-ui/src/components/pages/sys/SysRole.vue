@@ -61,6 +61,10 @@ export default {
         // 自定义校验规则
         var checkRoleName = (rule, value, callback) => {
             if (this.dataDialogForm.roleId !== 0) {
+                //校验是否为空
+                if (value === '') {
+                    callback(new Error('请输入角色名称'));
+                }
                 // 说明是更新操作
                 callback();
             }
@@ -97,6 +101,7 @@ export default {
             dialogFormVisible: false,
             //防止“新增”界面重复提交
             dialogFormSubmitVisible: false,
+            //校验规则
             rules: {
                 roleName: [
                     { validator: checkRoleName, trigger: 'blur' }
@@ -108,11 +113,13 @@ export default {
         };
     },
     methods: {
+        //每页多少条
         sizeChangeHandle(val) {
             this.pageSize = val;
             this.pageIndex = 1;
             this.getDataList();
         },
+        //当前页
         currentChangeHandle(val) {
             this.pageIndex = val;
             this.getDataList();
@@ -130,6 +137,7 @@ export default {
                     roleName: this.dataForm.roleName
                 }
             }
+            //获取数据
             this.$http.get('/sys/sysRole/list', params).then((res) => {
                 this.dataList = res.data.data.list;
                 this.totalPage = res.data.data.totalCount;
@@ -139,7 +147,7 @@ export default {
         handleEdit(index, item) {
             // 打开更新的窗口
             this.dialogFormVisible = true;
-
+            //绑定需要更新的数据
             this.dataDialogForm.roleId = item.roleId;
             this.dataDialogForm.roleName = item.roleName;
             this.dataDialogForm.remark = item.remark;
@@ -157,11 +165,23 @@ export default {
                 }
                 this.dialogFormSubmitVisible = true;
                 this.$http.get('/sys/sysRole/deleteRole?roleId=' + item.roleId).then((res) => {
-                    this.dialogFormSubmitVisible = true;
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    console.log(res)
+                    if (res.data.data === "0") {
+                        //表示数据不能被删除、
+                        this.$message({
+                            type: 'warning',
+                            message: '该条数据不允许删除!'
+                        });
+                    }
+                    else {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    }
+                    this.dialogFormSubmitVisible = false;
+                    //刷新数据
+                    this.getDataList();
                 });
             }).catch(() => {
                 this.$message({
