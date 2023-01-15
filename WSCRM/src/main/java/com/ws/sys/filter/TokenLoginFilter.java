@@ -79,7 +79,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = JWTUtils.getToken(map);
         //需要把生成的token信息响应给客户端 加“SYS_TOKEN_PREFIX”前缀用于防止别人截获篡改token,"SYS_TOKEN_PREFIX"可自定义
         response.addHeader("Authorization", SystemConstant.SYS_TOKEN_PREFIX +token);
-        response.addHeader("Access-Control-Expose-Header","Authorization");
+        response.addHeader("Access-Control-Expose-Headers","Authorization");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter writer = response.getWriter();

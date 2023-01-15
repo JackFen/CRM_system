@@ -10,9 +10,11 @@ import com.ws.sys.model.SysRoleQueryDTO;
 import com.ws.sys.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +26,9 @@ import java.time.LocalDateTime;
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
+
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 
     /**
      * 分页查询
@@ -97,5 +102,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             this.baseMapper.deleteById(roleId);
         }
         return count==0;
+    }
+
+    @Override
+    public List<SysRole> queryByUserId(Long userId) {
+        return sysRoleMapper.queryByUserId(userId);
     }
 }

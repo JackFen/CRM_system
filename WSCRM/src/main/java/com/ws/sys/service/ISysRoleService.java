@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ws.sys.model.SysRoleQueryDTO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -24,4 +26,6 @@ public interface ISysRoleService extends IService<SysRole> {
     boolean checkRoleName(String roleName);
 
     boolean deleteRoleById(@Param("roleId") Long roleId);
+
+    List<SysRole> queryByUserId(Long userId);
 }

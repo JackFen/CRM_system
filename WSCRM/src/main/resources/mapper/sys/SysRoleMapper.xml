@@ -7,4 +7,13 @@
         from sys_user_role s1,sys_role_menu s2
         where s1.role_id=#{roleId} or s2.role_id=#{roleId}
     </select>
+    <select id="queryByUserId" resultType="com.ws.sys.entity.SysRole">
+        select *
+        from sys_role s
+        where s.role_id in(
+            select role_id
+            from sys_user_role s2
+            where s2.user_id = #{userId}
+            )
+    </select>
 </mapper>

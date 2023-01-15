@@ -1,6 +1,8 @@
 package com.ws.sys.service.impl;
 
+import com.ws.sys.entity.SysRole;
 import com.ws.sys.entity.SysUser;
+import com.ws.sys.service.ISysRoleService;
 import com.ws.sys.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +23,8 @@ import java.util.List;
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     ISysUserService sysUserService;
+    @Autowired
+    ISysRoleService sysRoleService;
     /**
      * 完成账号的校验
      * @param username
@@ -35,9 +39,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
             //账号是存在的
             SysUser sysUser=list.get(0);
             //更加当前登录的账号查询到关联的角色信息
+            List<SysRole> sysRoles = sysRoleService.queryByUserId(sysUser.getUserId());
             List<GrantedAuthority> listRole= new ArrayList<>();
-            listRole.add(new SimpleGrantedAuthority("ADMIN"));
-            //密码模拟的就是数据库中查询出来的 密码是123456
+            if (sysRoles!=null && sysRoles.size()>0){
+                for (SysRole sysRole : sysRoles) {
+                    listRole.add(new SimpleGrantedAuthority(sysRole.getRoleName()));
+                }
+            }
             return new User(sysUser.getUsername(),sysUser.getPassword(),listRole);
         }
 //        if ("admin".equals(username)){
