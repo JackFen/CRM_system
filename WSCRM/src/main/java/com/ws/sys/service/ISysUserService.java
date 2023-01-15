@@ -3,6 +3,8 @@ package com.ws.sys.service;
 import com.ws.sys.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 系统用户 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserService extends IService<SysUser> {
 
+    List<SysUser> queryByUserName(String username);
 }

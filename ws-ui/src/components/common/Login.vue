@@ -2,7 +2,7 @@
     <div class="login_container">
         <div class="login_form">
             <p class="login_title">某某客户关系管理系统</p>
-            <el-form :model="form" :rules="rules" status-icon label-width="100px" class="demo-ruleForm">
+            <el-form :model="form" :rules="rules" status-icon label-width="100px" class="demo-ruleForm" ref="formName">
                 <el-form-item label="账号" prop="username">
                     <el-input v-model="form.username" placeholder="请输入账号"></el-input>
                 </el-form-item>
@@ -10,7 +10,7 @@
                     <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item style="text-align: center;">
-                    <el-button type="primary" size="medium">登录</el-button>
+                    <el-button type="primary" size="medium" @click="submitFormData">登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -31,6 +31,33 @@ export default {
                     { required: true, message: '请输入密码', trigger: 'blur' }
                 ]
             }
+        }
+    },
+    methods:{
+        //提交表单的数据
+        submitFormData(){
+            this.$refs['formName'].validate((valid) => {
+                if (valid) {
+                    this.$http.post('/login', this.form).then((res) => {
+                        // console.log(res)
+                        if(res.data.code==200){
+                            //表示登录成功                          
+                            //1.存储相关的token信息 token信息在响应的head中
+                            sessionStorage.setItem("token",res.headers.authorization)
+                            sessionStorage.setItem("username",this.form.username)
+                            //2.路由到主界面
+                            this.$router.push("/")
+                        }
+                        else{
+                            //表示登录失败
+                            this.$message.error(res.data.msg)
+                        }
+                    });
+                } else {
+                    // console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 }

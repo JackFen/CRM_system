@@ -15,7 +15,7 @@ import java.util.Map;
  * JWT操作的工具类
  */
 public class JWTUtils {
-    private static final String SECRET="jack";
+    private static final String SECRET="jack123";
 
     /**
      * 生成token信息

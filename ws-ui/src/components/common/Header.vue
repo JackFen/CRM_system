@@ -10,13 +10,13 @@
         </div>
         <div class="r-content">
             <!-- 头像下拉菜单 -->
-            <el-dropdown>
+            <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
                     <img class="user_img" src="@/assets/images/user1.png" alt="">
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人信息</el-dropdown-item>
-                    <el-dropdown-item>退出</el-dropdown-item>
+                    <el-dropdown-item command="a">个人信息</el-dropdown-item>
+                    <el-dropdown-item command="b">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -33,6 +33,25 @@ export default {
         handleMenu() {
             // 对菜单做缩放操作
             this.$store.commit('collapseChange');
+        },
+        handleCommand(command) {
+            if ('b' === command) {
+                this.$confirm('是否确认注销登录', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //表示处理的是注销操作
+                    sessionStorage.clear();//清空存储的token信息
+                    //然后跳转到登录页
+                    this.$router.push("/Login")
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消注销'
+                    });
+                });
+            }
         }
     },
     computed: {

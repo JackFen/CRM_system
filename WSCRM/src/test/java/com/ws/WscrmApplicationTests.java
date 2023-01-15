@@ -39,7 +39,7 @@ class WscrmApplicationTests {
         calendar.add(Calendar.SECOND,60);
         String token = JWT.create()
                 .withHeader(map)//设置头部
-                .withClaim("userid", 1001)//设置payload
+                .withClaim("username", "userid")//设置payload
                 .withExpiresAt(calendar.getTime())//设置过期时间 60秒
                 .sign(Algorithm.HMAC256(secret));//设置签名secret 密钥 需要对外保密
         System.out.println(token);
