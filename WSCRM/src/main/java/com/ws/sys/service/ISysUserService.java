@@ -1,7 +1,9 @@
 package com.ws.sys.service;
 
+import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ws.sys.model.SysUserQueryDTO;
 
 import java.util.List;
 
@@ -16,4 +18,12 @@ import java.util.List;
 public interface ISysUserService extends IService<SysUser> {
 
     List<SysUser> queryByUserName(String username);
+
+    PageUtils queryPage(SysUserQueryDTO dto);
+
+    boolean checkUserName(String username);
+
+    void saveOrUpdateUser(SysUser sysUser);
+
+    SysUser queryByUserId(Long userId);
 }

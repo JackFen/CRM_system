@@ -1,5 +1,6 @@
 package com.ws.sys.controller;
 
+import com.ws.common.constant.SystemConstant;
 import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysRole;
 import com.ws.sys.model.SysRoleQueryDTO;
@@ -52,6 +53,6 @@ public class SysRoleController {
     @GetMapping("/checkRoleName")
     public String checkRoleName(String roleName){
         boolean flag=roleService.checkRoleName(roleName);
-        return flag?"success":"fail";
+        return flag? SystemConstant.CHECK_SUCCESS :SystemConstant.CHECK_FAIL;
     }
 }

@@ -27,7 +27,8 @@ public class MySpringSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService)// 绑定自定义的认知Service
+                .passwordEncoder(new BCryptPasswordEncoder()); // 绑定密码处理器
     }
 
     @Override
