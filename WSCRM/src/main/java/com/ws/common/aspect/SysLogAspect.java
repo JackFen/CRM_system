@@ -11,6 +11,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -80,6 +83,10 @@ public class SysLogAspect {
 
         //记录的创建时间
         sysLog.setCreateDate(LocalDateTime.now());
+        //记录操作人
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        String userName = (String) token.getPrincipal();
+        sysLog.setUsername(userName);
 
         sysLogService.save(sysLog);
     }

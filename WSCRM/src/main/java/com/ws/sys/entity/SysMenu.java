@@ -1,9 +1,12 @@
 package com.ws.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -44,6 +47,18 @@ public class SysMenu implements Serializable {
 
     @ApiModelProperty("排序")
     private Integer orderNum;
+
+    @TableField(exist = false)//表示该字段不是数据库中的字段
+    private List<SysMenu> children;
+
+
+    public List<SysMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysMenu> children) {
+        this.children = children;
+    }
 
     public Long getMenuId() {
         return menuId;

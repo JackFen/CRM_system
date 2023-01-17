@@ -217,8 +217,6 @@ export default {
         },
         handleEdit(index, row) {
             //需要打开更新用户信息的窗口
-            //打开窗口
-            this.dialogFormVisible = true;
             // alert(row.userId)
             // this.dataDialogForm.userId=row.userId;
             //根据用户编号查询出用户信息。然后回写到弹出窗口中

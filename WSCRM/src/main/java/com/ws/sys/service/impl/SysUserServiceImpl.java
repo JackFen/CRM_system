@@ -2,6 +2,7 @@ package com.ws.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ws.common.annotation.SystemLog;
 import com.ws.common.constant.SystemConstant;
 import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysUser;
@@ -55,6 +56,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return false; //说明账号不存在
     }
 
+    @SystemLog("用户的添加/更新")
     @Override
     public void saveOrUpdateUser(SysUser sysUser) {
         if (sysUser.getUserId()>0){

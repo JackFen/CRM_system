@@ -1,7 +1,11 @@
 package com.ws.sys.service;
 
+import com.ws.common.util.PageUtils;
 import com.ws.sys.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ws.sys.model.SysMenuQueryDTO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
+    PageUtils listPage(SysMenuQueryDTO dto);
+
+    List<SysMenu> listParent();
+
+    void saveOrUpdateMenu(SysMenu menu);
+
+    SysMenu queryMenuById(Long menuId);
 }
