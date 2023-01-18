@@ -50,7 +50,16 @@ public class SysMenu implements Serializable {
 
     @TableField(exist = false)//表示该字段不是数据库中的字段
     private List<SysMenu> children;
+    @TableField(exist = false)//表示该字段不是数据库中的字段
+    private boolean canBeDeleted=false;//表示该记录是否可以被删除
 
+    public boolean isCanBeDeleted() {
+        return canBeDeleted;
+    }
+
+    public void setCanBeDeleted(boolean canBeDeleted) {
+        this.canBeDeleted = canBeDeleted;
+    }
 
     public List<SysMenu> getChildren() {
         return children;

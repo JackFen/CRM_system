@@ -11,6 +11,7 @@ import com.ws.sys.model.SysUserQueryDTO;
 import com.ws.sys.service.ISysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
-
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
     /**
      * 查询所有的菜单信息
      * @param dto
@@ -45,11 +47,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<SysMenu> menus = list.stream().map(item -> {
             //有子菜单
             Long menuId = item.getMenuId();
+            //判断当前菜单是否可以被删除
+            int count = sysMenuMapper.canBeDeleted(menuId);
+            if (count==0){
+                item.setCanBeDeleted(true);
+            }
             //根据menuId查询出所有的二级菜单
             QueryWrapper<SysMenu> wrapper1= new QueryWrapper<>();
             wrapper1.eq("parent_id",menuId)
                     .orderByAsc("order_num");
             List<SysMenu> subMenus = this.baseMapper.selectList(wrapper1);
+            for (SysMenu subMenu : subMenus) {
+                //主要是判断子菜单是否被分配
+                int i = sysMenuMapper.canBeDeleted(subMenu.getMenuId());
+                if (i==0){
+                    subMenu.setCanBeDeleted(true);
+                }
+            }
             item.setChildren(subMenus);
             return item;
         }).collect(Collectors.toList());
@@ -83,5 +97,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public SysMenu queryMenuById(Long menuId) {
         return this.baseMapper.selectById(menuId);
+    }
+
+    @SystemLog("菜单删除")
+    @Override
+    public String deleteMenuById(Long menuId) {
+        //1.判断数据是否能够删除
+        int count=sysMenuMapper.canBeDeleted(menuId);
+        if (count==0){
+            //表示数据可以删除
+            this.baseMapper.deleteById(menuId);
+            return "1";
+        }
+        //表示数据不能被删除
+        return "0";
     }
 }

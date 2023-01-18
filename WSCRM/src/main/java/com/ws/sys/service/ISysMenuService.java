@@ -24,4 +24,6 @@ public interface ISysMenuService extends IService<SysMenu> {
     void saveOrUpdateMenu(SysMenu menu);
 
     SysMenu queryMenuById(Long menuId);
+
+    String deleteMenuById(Long menuId);
 }

@@ -32,6 +32,9 @@
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary"
                             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger"
+                            @click="handleDelete(scope.$index, scope.row)" 
+                            v-if="scope.row.canBeDeleted">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -173,24 +176,60 @@ export default {
                 //获取Id对应的数据
                 var menu = res.data.data.menu;
                 //获取所有的父菜单信息
-                this.options=res.data.data.parents;
+                this.options = res.data.data.parents;
                 this.dataDialogForm = {
                     menuId: menu.menuId,//弹出窗口绑定 菜单编号-->更新处理
                     name: menu.name,
                     url: menu.url,
                     icon: menu.icon,
                     orderNum: menu.orderNum,
-                    parentId:menu.parentId
+                    parentId: menu.parentId
                 }
                 //打开窗口
                 this.dialogFormVisible = true;
             });
         },
-        handleUpdateStatus(index, row) {
-
+        handleDelete(index, row) {
+            // 删除角色信息
+            this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if (this.dialogFormSubmitVisible) {
+                    return
+                }
+                this.dialogFormSubmitVisible = true;
+                this.$http.get('/sys/sysMenu/deleteMenu?menuId=' + row.menuId).then((res) => {
+                    // console.log(res)
+                    if (res.data.data === "0") {
+                        //表示数据不能被删除、
+                        this.$message({
+                            type: 'warning',
+                            message: '该条数据不允许删除!'
+                        });
+                    }
+                    else {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    }
+                    this.dialogFormSubmitVisible = false;
+                    //刷新数据
+                    this.getDataList();
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         closeDialog() {
-
+            this.dataDialogForm = {
+                menuId: 0,
+            };
         }
     },
     mounted() {

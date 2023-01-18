@@ -56,4 +56,10 @@ public class SysMenuController {
         List<SysMenu> parents = menuService.listParent();
         return new MenuUpdateDTO(parents,sysMenu);
     }
+    @ApiOperation(value = "删除菜单",notes = "删除菜单")
+    @GetMapping("/deleteMenu")
+    public String deleteMenu(Long menuId){
+        //不能删除返回0，否则返回1
+        return menuService.deleteMenuById(menuId);
+    }
 }
