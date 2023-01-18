@@ -13,7 +13,9 @@
 
 后端部分：WSCRM
 
-数据库文件：crm.sql
+所用数据库：Mysql8.0
+
+数据库文件：ws_crm.sql
 
 当前进度：
 
